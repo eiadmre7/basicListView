@@ -8,39 +8,46 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-private ListView list_1;
-private Button btnShow;
-private String[] arr1;
-private ArrayAdapter<String> adapter;
+    private Button btnShow;
+    private ListView list1;
+    private String[] arr;
+    private ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        list_1.setOnItemClickListener(this);
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              list_1.setAdapter(adapter);
+                list1.setAdapter(adapter);
             }
         });
+        list1.setOnItemClickListener(this);
     }
 
     private void initViews() {
-        btnShow=findViewById(R.id.button);
-        list_1=findViewById(R.id.lstChess);
-        arr1=getResources().getStringArray(R.array.pieces);
-        adapter =new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1,arr1);
+        btnShow=findViewById(R.id.btnShowList);
+        list1=findViewById(R.id.lstStones);
+        initArray();
+        adapter=new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, arr);
+    }
+
+    private void initArray() {
+        arr= getResources().getStringArray(R.array.games);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String stone=arr1[position];
-        String[] s;
-        s=stone.split("-");
-        Toast.makeText(this, s[1]+" was clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, arr[position].toString()+" Was clicked..", Toast.LENGTH_SHORT).show();
     }
 }
